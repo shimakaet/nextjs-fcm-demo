@@ -53,17 +53,17 @@ export default function Home() {
   }
 
   function messageListner() {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.addEventListener("message", (event) => {
-        // console.log("event for the service worker", event);
-        let notification = event.data.notification;
-        console.log("notification", notification);
-        setNotifications((oldNotifications) => [
-          ...oldNotifications,
-          notification,
-        ]);
-      });
-    }
+    // if ("serviceWorker" in navigator) {
+    //   navigator.serviceWorker.addEventListener("message", (event) => {
+    //     // console.log("event for the service worker", event);
+    //     let notification = event.data.notification;
+    //     console.log("notification", notification);
+    //     setNotifications((oldNotifications) => [
+    //       ...oldNotifications,
+    //       notification,
+    //     ]);
+    //   });
+    // }
   }
 
   function onButtonPressed(e) {
@@ -93,17 +93,21 @@ export default function Home() {
       if (token) {
         console.log("token", token);
         onMessage(messaging, (payload) => {
-          console.log("Message received. ", payload);
+          // console.log("Message received. ", payload);
+
+          let notification = payload.notification;
+          console.log("notification", notification);
+
+          setNotifications((oldNotifications) => [
+            ...oldNotifications,
+            notification,
+          ]);
         });
       } else {
         console.log(
           "No registration token available. Request permission to generate one."
         );
       }
-    });
-
-    onMessage((payload) => {
-      console.log("Message received. ", payload);
     });
   }
 
