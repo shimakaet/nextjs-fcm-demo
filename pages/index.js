@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import PushNotificationLayout from "../components/PushNotificationLayout";
 import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
 import {
@@ -57,7 +56,7 @@ export default function Home() {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.addEventListener("message", (event) => {
         // console.log("event for the service worker", event);
-        let notification = event.data.firebaseMessaging.payload.notification;
+        let notification = event.data.notification;
         console.log("notification", notification);
         setNotifications((oldNotifications) => [
           ...oldNotifications,
@@ -109,7 +108,7 @@ export default function Home() {
   }
 
   return (
-    <PushNotificationLayout>
+    <>
       <Head>
         <link rel="manifest" href={"/manifest.json"} />
       </Head>
@@ -143,7 +142,7 @@ export default function Home() {
           </div>
         </main>
       </div>
-    </PushNotificationLayout>
+    </>
   );
 }
 

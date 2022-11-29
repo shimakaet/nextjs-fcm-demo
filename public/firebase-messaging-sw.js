@@ -1,10 +1,17 @@
-import { initializeApp } from "firebase/app";
-import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
+// Give the service worker access to Firebase Messaging.
+// Note that you can only use Firebase Messaging here. Other Firebase libraries
+// are not available in the service worker.
+// importScripts("https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js");
+// importScripts("https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging.js");
 
-// Initialize the Firebase app in the service worker by passing in
-// your app's Firebase config object.
-// https://firebase.google.com/docs/web/setup#config-object
-const firebaseApp = initializeApp({
+importScripts(
+  "https://www.gstatic.com/firebasejs/9.2.0/firebase-app-compat.js"
+);
+importScripts(
+  "https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging-compat.js"
+);
+
+var firebaseConfig = {
   apiKey: "AIzaSyBOT-s-RX4AQmnl1ZiCD6aYxpr3qLksWLk",
   authDomain: "pwapushtestapp.firebaseapp.com",
   projectId: "pwapushtestapp",
@@ -12,23 +19,27 @@ const firebaseApp = initializeApp({
   messagingSenderId: "189028546599",
   appId: "1:189028546599:web:cc3f70753b533508ba3602",
   measurementId: "G-7LZNDW6BTM",
-});
+}; // Initialize Firebase
 
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
-const messaging = getMessaging(firebaseApp);
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
 
-onBackgroundMessage(messaging, (payload) => {
+messaging.onBackgroundMessage((payload) => {
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
   );
-  // Customize notification here
-  const notificationTitle = "Background Message Title";
+  const notificationTitle = payload.notification.title;
   const notificationOptions = {
-    body: "Background Message body.",
-    icon: "/firebase-logo.png",
+    body: payload.notification.body,
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  console.log(event);
 });
