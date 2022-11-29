@@ -1,0 +1,35 @@
+{
+
+    "id": "/?isPWA=true",
+  
+    "theme_color": "#006B3B",
+  
+    "background_color": "#006B3B",
+  
+    "display": "standalone",
+  
+    "scope": "/",
+  
+    "start_url": "/?isPWA=true",
+  
+    "name": "Green4All",
+  
+    "short_name": "Green4All",
+  
+    "description": "Green4All",
+  
+    "icons": [
+  
+      {
+  
+        "src": "/firebase-logo.png",
+  
+        "sizes": "50x50",
+  
+        "type": "image/png"
+  
+      }
+  
+    ]
+  
+  }
